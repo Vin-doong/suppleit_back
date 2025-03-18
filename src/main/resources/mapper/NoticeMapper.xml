@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suppleit.backend.mapper.NoticeMapper">
+
+    <!-- ✅ 공지사항 전체 조회 -->
+    <select id="getAllNotices" resultType="com.suppleit.backend.model.Notice">
+        SELECT notice_id AS noticeId, title, content, member_id AS memberId FROM Notice;
+    </select>
+
+    <!-- ✅ 특정 공지사항 조회 -->
+    <select id="getNoticeById" resultType="com.suppleit.backend.dto.NoticeDto">
+        SELECT notice_id AS noticeId, title, content FROM Notice WHERE notice_id = #{noticeId};
+    </select>
+
+    <!-- ✅ 공지사항 등록 -->
+    <insert id="insertNotice">
+        INSERT INTO Notice (title, content, member_id) 
+        VALUES (#{title}, #{content}, #{memberId});
+    </insert>
+
+
+    <!-- ✅ 공지사항 수정 -->
+    <update id="updateNotice">
+        UPDATE Notice SET title = #{notice.title}, content = #{notice.content} WHERE notice_id = #{noticeId};
+    </update>
+
+    <!-- ✅ 공지사항 삭제 -->
+    <delete id="deleteNotice">
+        DELETE FROM Notice WHERE notice_id = #{noticeId};
+    </delete>
+
+</mapper>

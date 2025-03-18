@@ -1,0 +1,605 @@
+Folder PATH listing
+Volume serial number is 4CB8-2C85
+C:.
+│   .gitattributes
+│   .gitignore
+│   build.gradle
+│   build.txt
+│   gradlew
+│   gradlew.bat
+│   project_structure.txt
+│   README.md
+│   settings.gradle
+│   권한흐름.md
+│   와진짜.md
+│   
+├───.git
+│   │   COMMIT_EDITMSG
+│   │   config
+│   │   description
+│   │   FETCH_HEAD
+│   │   HEAD
+│   │   index
+│   │   
+│   ├───hooks
+│   │       applypatch-msg.sample
+│   │       commit-msg.sample
+│   │       fsmonitor-watchman.sample
+│   │       post-update.sample
+│   │       pre-applypatch.sample
+│   │       pre-commit.sample
+│   │       pre-merge-commit.sample
+│   │       pre-push.sample
+│   │       pre-rebase.sample
+│   │       pre-receive.sample
+│   │       prepare-commit-msg.sample
+│   │       push-to-checkout.sample
+│   │       sendemail-validate.sample
+│   │       update.sample
+│   │       
+│   ├───info
+│   │       exclude
+│   │       
+│   ├───logs
+│   │   │   HEAD
+│   │   │   
+│   │   └───refs
+│   │       ├───heads
+│   │       │       develop
+│   │       │       lec16
+│   │       │       main
+│   │       │       
+│   │       └───remotes
+│   │           └───origin
+│   │                   develop
+│   │                   lec16
+│   │                   main
+│   │                   
+│   ├───objects
+│   │   ├───00
+│   │   │       f4cf8dd0b4e9a2723b6665deb797b846698e7f
+│   │   │       
+│   │   ├───03
+│   │   │       c12f0d572bb756a4b84ec75c0d223e4ba955e3
+│   │   │       
+│   │   ├───05
+│   │   │       bd80d9976f8013f0419fd687658dcabde6f8ad
+│   │   │       
+│   │   ├───06
+│   │   │       64ab6626e6ec1c6379584542048f8134d7bdb0
+│   │   │       
+│   │   ├───07
+│   │   │       88e46cb3bdd4f70be57ade88b9e6e9bbeee039
+│   │   │       
+│   │   ├───08
+│   │   │       5b431331f09f5bbccfaed956fc72dc5522bcb8
+│   │   │       ebf278023b65cb2860f9f99181ddbf2b4e9ffd
+│   │   │       
+│   │   ├───09
+│   │   │       ddeddeadd06d4ea903148e7e2b5784a63143bd
+│   │   │       
+│   │   ├───0b
+│   │   │       82e10b70fe33fc4340251649ca785965601781
+│   │   │       
+│   │   ├───0f
+│   │   │       5036dcc20c98777024d86546cd03aa9307dedd
+│   │   │       
+│   │   ├───14
+│   │   │       96d75c7713e1ecadb1131f982b5a663feadb72
+│   │   │       
+│   │   ├───17
+│   │   │       7aa958885a38dab6a20629479675126ddc9199
+│   │   │       ee1008387571e1ee87247d407dcaf245837077
+│   │   │       
+│   │   ├───19
+│   │   │       db4e6ee5dbdf42d801e1bf2937a0390823feda
+│   │   │       
+│   │   ├───1b
+│   │   │       80fec9c5b117b344053924bbb946710afc0ff7
+│   │   │       c9b9468c3e89a88d25b1f748ad17b2495fec68
+│   │   │       
+│   │   ├───1d
+│   │   │       72833af2cfb6b8c3f43bbf53cb68faf58bfab9
+│   │   │       
+│   │   ├───1f
+│   │   │       54d003b271792f2e7294f1df46fd033220d8e8
+│   │   │       
+│   │   ├───22
+│   │   │       1a3e2b081b08c1c5fcd6c363d522af5cbed3c0
+│   │   │       
+│   │   ├───24
+│   │   │       702cf4e828ceb6ce32edbe9fa9260473203330
+│   │   │       
+│   │   ├───25
+│   │   │       f3e8836d0bff0f0ef88187da4760a8f5fb7e48
+│   │   │       
+│   │   ├───27
+│   │   │       0326e19cbbd28ddc49553d895d2d3139caa852
+│   │   │       
+│   │   ├───2b
+│   │   │       db3c4b6f67ec3ca4fb615283b44233678c1805
+│   │   │       
+│   │   ├───2c
+│   │   │       7155447ffa246d67f053a772a7a1afb2367c10
+│   │   │       
+│   │   ├───32
+│   │   │       abaef31c33bb08d3d81d9ff302cbd91dfd9f86
+│   │   │       
+│   │   ├───33
+│   │   │       19332c4844cf2a37820dff61572af4835c3fc7
+│   │   │       
+│   │   ├───37
+│   │   │       2f142a7926a898e87897d657d1a01d0be44c17
+│   │   │       9259deba76d8f96e6befe52ed8ad976550f6b0
+│   │   │       d77f5dddeabc0d5d526347845cf601c12c9e37
+│   │   │       
+│   │   ├───38
+│   │   │       62613536e298efff5c1f851f4f6ab7d30d396f
+│   │   │       956b017d123ea39e60124ad8e80bbca15bdb0b
+│   │   │       
+│   │   ├───3b
+│   │   │       368c8f69b7be2139192de89617e02224f591a8
+│   │   │       551c291c8f986f400d4c7046d53aca13ae868a
+│   │   │       
+│   │   ├───3f
+│   │   │       0399027d3583e8c1f91f7af00b5d7360201ea8
+│   │   │       
+│   │   ├───43
+│   │   │       45039f86d34ec98c9f5cb7f69ff2f9a50d405a
+│   │   │       85cc83c6fe4ee6f2b500b64189434713f59bd3
+│   │   │       
+│   │   ├───45
+│   │   │       4dbd3f46b5b16086c0dac593423af2c176925e
+│   │   │       
+│   │   ├───4c
+│   │   │       a2739373c250bfc8e0ddf7a3be8d0fa624231e
+│   │   │       
+│   │   ├───4e
+│   │   │       81649cf60685217ecd969e997f0650f8a1a37d
+│   │   │       
+│   │   ├───50
+│   │   │       e5abfcc1799c7b957970b6d4df2e2a54669558
+│   │   │       
+│   │   ├───52
+│   │   │       4f0963bd1d8c6149eb6f2dc52a5fc50c7637ad
+│   │   │       99bc2ec299b4ce62df4b624c7f79a6a732aa50
+│   │   │       
+│   │   ├───54
+│   │   │       abc27320b703521ac6b53d617b9299288148bb
+│   │   │       
+│   │   ├───55
+│   │   │       2e4a017221265e7cd286b55167f350d976fe33
+│   │   │       d960ce8e9a74f5bf9ef9ec54d54bd138a4a1db
+│   │   │       
+│   │   ├───59
+│   │   │       51e31827c40f58a3e0c41ed03dfb41f033b3e8
+│   │   │       
+│   │   ├───5b
+│   │   │       fee1b3a02eda70ac2b4328ab1f18406451d8ea
+│   │   │       
+│   │   ├───5c
+│   │   │       52f8a34d1e9b405f0f38c4b9cc7b4ad881f4fa
+│   │   │       
+│   │   ├───5e
+│   │   │       ac664029123a6629cd6244de5a0cf7c0490bd0
+│   │   │       
+│   │   ├───63
+│   │   │       b7d3c64310cb83d7c5379c0f99561aaccc1f39
+│   │   │       
+│   │   ├───65
+│   │   │       30f87f52335448d289c5138307952dfb35e314
+│   │   │       
+│   │   ├───66
+│   │   │       e1cc2afd834f260073afb69fd7210260e8f551
+│   │   │       
+│   │   ├───69
+│   │   │       2f1e18537d8609978768482f706d7c2e42f618
+│   │   │       8842746d48f71fa133c7acbc98f3297cc17140
+│   │   │       
+│   │   ├───6b
+│   │   │       d623d43ef3757e5700d7124864b513a4eb9108
+│   │   │       e6c738febb2169cb2a438a20d1a4de1134a839
+│   │   │       
+│   │   ├───6d
+│   │   │       48d9d6a676f8652ca5df07f2812c36de69dc88
+│   │   │       
+│   │   ├───6f
+│   │   │       cc1a0a912f8f6828222dbf0e73959e9a3c8168
+│   │   │       
+│   │   ├───70
+│   │   │       c7cc74ad1dd39ac0bc58df15183e7526d4c741
+│   │   │       
+│   │   ├───72
+│   │   │       788c74d00325b82d3f364adf57cb813324eb08
+│   │   │       
+│   │   ├───74
+│   │   │       f5b2726952011d80720d1e1d6435efd6eee2b5
+│   │   │       
+│   │   ├───75
+│   │   │       1ae92e3238ac0d3670345eecbd955113ab3350
+│   │   │       e6e84c20d143283b5b30cc6a3341a2334a1665
+│   │   │       
+│   │   ├───77
+│   │   │       70d7d5a82af9abcef5aea44722453fd9cf8494
+│   │   │       
+│   │   ├───79
+│   │   │       6464f8a2f711a3258a31854899aaa13229241b
+│   │   │       
+│   │   ├───7b
+│   │   │       03bb591943beeb1629e3153b5782f6b7155d01
+│   │   │       
+│   │   ├───7c
+│   │   │       0324afb6d41cc238b0875dabbe4daf9bce32af
+│   │   │       39a644edb1b22a97d2544c380e59d6a2e5ea78
+│   │   │       a6ef7d10eb9777fee78fa574fe9fc3088fff47
+│   │   │       
+│   │   ├───7e
+│   │   │       e41587687db52f2632051ad791cd49f9759c68
+│   │   │       ee381ed2a2a32e07f808b0fde953527920ec6c
+│   │   │       
+│   │   ├───84
+│   │   │       10dd65aa6e349565b7e398d2faae784bde0331
+│   │   │       
+│   │   ├───8a
+│   │   │       f972cded0d3e3ccb3c6e801150168bcc93150a
+│   │   │       
+│   │   ├───8b
+│   │   │       1340f0c9860607ccdfbf0e453cb92e164a1875
+│   │   │       1595f1964ac4a33edf8b140083d34e72a03ab9
+│   │   │       
+│   │   ├───90
+│   │   │       80ec9fdbb03aa730eb73e6a0e00779700b82e6
+│   │   │       d33353d01a3b3cffc7910c7e4072b6427c62b4
+│   │   │       
+│   │   ├───94
+│   │   │       15ce0845636b62ce14351fea99d16a629620af
+│   │   │       
+│   │   ├───96
+│   │   │       6960f4223c46d2629c3cfedc189ec0513b8ca6
+│   │   │       
+│   │   ├───9c
+│   │   │       7fba529e0b2cd16ee55999f5d15fb99d882b8b
+│   │   │       
+│   │   ├───9d
+│   │   │       21a21834d5195c278ba17baec3115b2aaab06e
+│   │   │       
+│   │   ├───9e
+│   │   │       b051a1fd043ca2c059c68c71f19c0c59c4500d
+│   │   │       
+│   │   ├───a1
+│   │   │       6bee6f17fb3e56c134aa2cd627ff465c130dc0
+│   │   │       cca8f23a4fe4b93db6ff9acc3456ed3823619d
+│   │   │       
+│   │   ├───a3
+│   │   │       33011c8b938df2f9946e9c4905e8b831319d79
+│   │   │       
+│   │   ├───a4
+│   │   │       b76b9530d66f5e68d973ea569d8e19de379189
+│   │   │       
+│   │   ├───a9
+│   │   │       59a2a2d1a43f3a09fdcd0273c17c8e04b2f03b
+│   │   │       
+│   │   ├───aa
+│   │   │       595e63f5af560323b4e41cf3c02aae8ee04f30
+│   │   │       
+│   │   ├───ad
+│   │   │       b0229365f52050ee235bc6707ae95154989971
+│   │   │       
+│   │   ├───ae
+│   │   │       d85ba519b2ad262040541a16adaf5131b6a0f2
+│   │   │       
+│   │   ├───b2
+│   │   │       539a7fdd186a514738ebf059a8a515ef9d95d7
+│   │   │       
+│   │   ├───b3
+│   │   │       3ee2e1463a16713ef08f13b82fe01509f97b72
+│   │   │       
+│   │   ├───bd
+│   │   │       3ff6682099e585012c10b123d5b2300a3a5b69
+│   │   │       
+│   │   ├───c2
+│   │   │       065bc26202b2d072aca3efc3d1c2efad3afcbf
+│   │   │       e82d54cace3b689cd848a34bed280c5fae3310
+│   │   │       
+│   │   ├───cc
+│   │   │       496ee68568c70716693d4f083950b5c8e3ac0b
+│   │   │       
+│   │   ├───cd
+│   │   │       ce0ee5bb9fddfed98d0c0b52de377c3f8a331a
+│   │   │       cff75a44b4e010db383af47b1e7ff649f7d5ed
+│   │   │       
+│   │   ├───ce
+│   │   │       7891b00294245feb402885a43c99aae55b5aa8
+│   │   │       
+│   │   ├───d0
+│   │   │       2a443c304100d576b6d34f698ddceb1b6f71ff
+│   │   │       
+│   │   ├───d2
+│   │   │       d5adb6a8cfec6549aa9b410d5b432931f6d498
+│   │   │       
+│   │   ├───d4
+│   │   │       82d322aa7c2ac3e1bf3eef45e97f711c10d9dd
+│   │   │       
+│   │   ├───d9
+│   │   │       811f68d7c27ac0dd740c2d48812f5c4f108201
+│   │   │       
+│   │   ├───dc
+│   │   │       6b922810bdc68a363c7c49e59b4b98ecba0101
+│   │   │       a21f643888f5920ee0519da714b546444660cb
+│   │   │       
+│   │   ├───dd
+│   │   │       ad78c43ca928886861c1079aafffbee2d2dbcb
+│   │   │       
+│   │   ├───df
+│   │   │       09d5c3f95102690e134e171d9915e71beb51c3
+│   │   │       
+│   │   ├───e1
+│   │   │       8bc253b857cc9614e63c8975b677f496755957
+│   │   │       
+│   │   ├───e2
+│   │   │       906e33e2c22f36491601d4272deb9c31c5d87b
+│   │   │       
+│   │   ├───e4
+│   │   │       df47e2d6812769e290806d5b1a690036fc33ea
+│   │   │       
+│   │   ├───e6
+│   │   │       1e453eff07c0f16c912b11c9166339d2f65466
+│   │   │       
+│   │   ├───e7
+│   │   │       5eb243f0fa0dcf87ada06fd10edab4014760f4
+│   │   │       
+│   │   ├───e8
+│   │   │       5c70a278d178880e1b29fdd91913727dade966
+│   │   │       92f1e0a451eaf8b687c596a960303332ee2afe
+│   │   │       
+│   │   ├───ea
+│   │   │       a4419944f124273bf878ec0b1d56674258fb5f
+│   │   │       
+│   │   ├───ed
+│   │   │       c94c0dc51947b50d719377e27e93bc0362c2da
+│   │   │       
+│   │   ├───ee
+│   │   │       59769987ec9d1698fa78e89e4e08b1f1ee1380
+│   │   │       d146f20223207ba6f35ee2c3848f5f1dd123c6
+│   │   │       
+│   │   ├───f0
+│   │   │       5f11f3d908893ddfeb1b905f3a9169a01067e6
+│   │   │       ae9b8cc0558b39d1fb0cd68318badd098b6ffd
+│   │   │       
+│   │   ├───f3
+│   │   │       10dd7d8d2925e5fbc7ebbaecfbe03293da0daa
+│   │   │       
+│   │   ├───f5
+│   │   │       eea678d87a8664e4c76e12d3ef5c4ff775ad58
+│   │   │       feea6d6b116baaca5a2642d4d9fa1f47d574a7
+│   │   │       
+│   │   ├───f6
+│   │   │       483923671a842a994ee2ab0bc2b4b33c79e667
+│   │   │       d0976e69ad0cec78219090253cd21e63541033
+│   │   │       
+│   │   ├───fb
+│   │   │       b7cf0272d546fbac319d80148437eaa123bbf4
+│   │   │       
+│   │   ├───fd
+│   │   │       f70d956d210df7c84787fd8a0a0651d63004ce
+│   │   │       
+│   │   ├───ff
+│   │   │       3f12bb21c194f19c0c4730695fcca657cc11df
+│   │   │       
+│   │   ├───info
+│   │   └───pack
+│   └───refs
+│       ├───heads
+│       │       develop
+│       │       lec16
+│       │       main
+│       │       
+│       ├───remotes
+│       │   └───origin
+│       │           develop
+│       │           lec16
+│       │           main
+│       │           
+│       └───tags
+├───.gradle
+│   │   file-system.probe
+│   │   
+│   ├───8.12.1
+│   │   │   gc.properties
+│   │   │   
+│   │   ├───checksums
+│   │   │       checksums.lock
+│   │   │       
+│   │   ├───executionHistory
+│   │   │       executionHistory.bin
+│   │   │       executionHistory.lock
+│   │   │       
+│   │   ├───expanded
+│   │   ├───fileChanges
+│   │   │       last-build.bin
+│   │   │       
+│   │   ├───fileHashes
+│   │   │       fileHashes.bin
+│   │   │       fileHashes.lock
+│   │   │       resourceHashesCache.bin
+│   │   │       
+│   │   └───vcsMetadata
+│   ├───buildOutputCleanup
+│   │       buildOutputCleanup.lock
+│   │       cache.properties
+│   │       outputFiles.bin
+│   │       
+│   └───vcs-1
+│           gc.properties
+│           
+├───.vscode
+│       settings.json
+│       
+├───build
+│   ├───classes
+│   │   └───java
+│   │       ├───main
+│   │       │   └───com
+│   │       │       └───suppleit
+│   │       │           └───backend
+│   │       │               │   BackendApplication.class
+│   │       │               │   
+│   │       │               ├───config
+│   │       │               │       AppConfig.class
+│   │       │               │       MyBatisConfig.class
+│   │       │               │       SecurityConfig.class
+│   │       │               │       
+│   │       │               ├───constants
+│   │       │               │       Gender.class
+│   │       │               │       MemberRole.class
+│   │       │               │       SocialType.class
+│   │       │               │       
+│   │       │               ├───controller
+│   │       │               │       AuthController.class
+│   │       │               │       MemberController.class
+│   │       │               │       NoticeController.class
+│   │       │               │       SocialLoginController.class
+│   │       │               │       
+│   │       │               ├───dto
+│   │       │               │       AuthRequest.class
+│   │       │               │       MemberDto$MemberDtoBuilder.class
+│   │       │               │       MemberDto.class
+│   │       │               │       NoticeDto$NoticeDtoBuilder.class
+│   │       │               │       NoticeDto.class
+│   │       │               │       
+│   │       │               ├───mapper
+│   │       │               │       MemberMapper.class
+│   │       │               │       NoticeMapper.class
+│   │       │               │       
+│   │       │               ├───model
+│   │       │               │       Member$MemberBuilder.class
+│   │       │               │       Member.class
+│   │       │               │       Notice$NoticeBuilder.class
+│   │       │               │       Notice.class
+│   │       │               │       
+│   │       │               ├───security
+│   │       │               │   └───jwt
+│   │       │               │           JwtFilter.class
+│   │       │               │           JwtTokenProvider.class
+│   │       │               │           
+│   │       │               └───service
+│   │       │                       MemberDetailsService.class
+│   │       │                       MemberService.class
+│   │       │                       NoticeService.class
+│   │       │                       SocialLoginService.class
+│   │       │                       
+│   │       └───test
+│   │           └───com
+│   │               └───suppleit
+│   │                   └───backend
+│   │                           BackendApplicationTests.class
+│   │                           
+│   ├───generated
+│   │   └───sources
+│   │       ├───annotationProcessor
+│   │       │   └───java
+│   │       │       ├───main
+│   │       │       └───test
+│   │       └───headers
+│   │           └───java
+│   │               ├───main
+│   │               └───test
+│   ├───reports
+│   │   └───problems
+│   │           problems-report.html
+│   │           
+│   ├───resources
+│   │   ├───main
+│   │   │   │   application.yml
+│   │   │   │   
+│   │   │   └───mapper
+│   │   │           MemberMapper.xml
+│   │   │           MemberSocialMapper.txt
+│   │   │           NoticeMapper.xml
+│   │   │           
+│   │   └───test
+│   └───tmp
+│       ├───compileJava
+│       │   │   previous-compilation-data.bin
+│       │   │   
+│       │   └───compileTransaction
+│       │       ├───backup-dir
+│       │       └───stash-dir
+│       └───compileTestJava
+│               previous-compilation-data.bin
+│               
+├───gradle
+│   └───wrapper
+│           gradle-wrapper.jar
+│           gradle-wrapper.properties
+│           
+└───src
+    ├───main
+    │   ├───java
+    │   │   └───com
+    │   │       └───suppleit
+    │   │           └───backend
+    │   │               │   BackendApplication.java
+    │   │               │   
+    │   │               ├───config
+    │   │               │       AppConfig.java
+    │   │               │       JacksonConfig.txt
+    │   │               │       MyBatisConfig.java
+    │   │               │       SecurityConfig.java
+    │   │               │       
+    │   │               ├───constants
+    │   │               │       Gender.java
+    │   │               │       MemberRole.java
+    │   │               │       MemberRole.txt
+    │   │               │       read.txt
+    │   │               │       SocialType.java
+    │   │               │       
+    │   │               ├───controller
+    │   │               │       AuthController.java
+    │   │               │       MemberController.java
+    │   │               │       NoticeController.java
+    │   │               │       SocialLoginController.java
+    │   │               │       
+    │   │               ├───dto
+    │   │               │       AuthRequest.java
+    │   │               │       MemberDto.java
+    │   │               │       MemberSocialDto.txt
+    │   │               │       NoticeDto.java
+    │   │               │       PasswordChangeRequest.txt
+    │   │               │       
+    │   │               ├───mapper
+    │   │               │       MemberMapper.java
+    │   │               │       MemberSocialMapper.txt
+    │   │               │       NoticeMapper.java
+    │   │               │       
+    │   │               ├───model
+    │   │               │       Member.java
+    │   │               │       MemberSocial.txt
+    │   │               │       Notice.java
+    │   │               │       
+    │   │               ├───security
+    │   │               │   └───jwt
+    │   │               │           JwtFilter.java
+    │   │               │           JwtTokenProvider.java
+    │   │               │           
+    │   │               └───service
+    │   │                       MemberDetailsService.java
+    │   │                       MemberService.java
+    │   │                       NoticeService.java
+    │   │                       SocialLoginService.java
+    │   │                       
+    │   └───resources
+    │       │   application.yml
+    │       │   
+    │       └───mapper
+    │               MemberMapper.xml
+    │               MemberSocialMapper.txt
+    │               NoticeMapper.xml
+    │               
+    └───test
+        └───java
+            └───com
+                └───suppleit
+                    └───backend
+                            BackendApplicationTests.java
+                            
