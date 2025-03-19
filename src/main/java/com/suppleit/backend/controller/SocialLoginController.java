@@ -43,9 +43,10 @@ public class SocialLoginController {
      * 회원가입/로그인 처리 후 JWT 토큰을 반환
      */
     @PostMapping("/login/google")
-    public ResponseEntity<?> loginWithGoogle(@RequestParam String accessToken) {
+    public ResponseEntity<?> loginWithGoogle(@RequestBody Map<String, String> request) {
+        String code = request.get("code");
         try {
-            Map<String, Object> result = socialLoginService.getGoogleMember(accessToken);
+            Map<String, Object> result = socialLoginService.getGoogleMember(code);
             return ResponseEntity.ok(ApiResponse.success("구글 로그인 성공", result));
         } catch (Exception e) {
             log.error("구글 로그인 오류: {}", e.getMessage(), e);
@@ -60,9 +61,10 @@ public class SocialLoginController {
      * 회원가입/로그인 처리 후 JWT 토큰을 반환
      */
     @PostMapping("/login/naver")
-    public ResponseEntity<?> loginWithNaver(@RequestParam String accessToken) {
+    public ResponseEntity<?> loginWithNaver(@RequestBody Map<String, String> request) {
+        String code = request.get("code");
         try {
-            Map<String, Object> result = socialLoginService.getNaverMember(accessToken);
+            Map<String, Object> result = socialLoginService.getNaverMember(code);
             return ResponseEntity.ok(ApiResponse.success("네이버 로그인 성공", result));
         } catch (Exception e) {
             log.error("네이버 로그인 오류: {}", e.getMessage(), e);
