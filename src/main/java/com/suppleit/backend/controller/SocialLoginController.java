@@ -19,10 +19,11 @@ public class SocialLoginController {
     private final SocialLoginService socialLoginService;
 
     /**
-     * 카카오 로그인 API
+     * 카카오 로그인 API - 사용하지 않음
      * 클라이언트에서 받은 카카오 액세스 토큰을 이용해 사용자 정보를 조회하고
      * 회원가입/로그인 처리 후 JWT 토큰을 반환
      */
+    /*
     @PostMapping("/login/kakao")
     public ResponseEntity<?> loginWithKakao(@RequestParam String accessToken) {
         try {
@@ -34,6 +35,7 @@ public class SocialLoginController {
                 .body(ApiResponse.error("카카오 로그인 실패: " + e.getMessage()));
         }
     }
+    */
 
     /**
      * 구글 로그인 API
@@ -68,6 +70,4 @@ public class SocialLoginController {
                 .body(ApiResponse.error("네이버 로그인 실패: " + e.getMessage()));
         }
     }
-
-    
 }

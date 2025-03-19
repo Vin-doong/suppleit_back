@@ -12,4 +12,9 @@ public class Notice {
     private String title;
     private String content;
     private Long memberId; // ✅ 추가: 작성자 ID (외래키)
+
+    //0319
+    private String imagePath;        // 이미지 경로
+    private String attachmentPath;   // 첨부파일 경로
+    private String attachmentName;   // 첨부파일 원본명
 }

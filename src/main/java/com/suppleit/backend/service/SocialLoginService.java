@@ -30,7 +30,8 @@ public class SocialLoginService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    // 카카오 로그인
+    // 카카오 로그인 - 사용하지 않음
+    /*
     public Map<String, Object> getKakaoMember(String accessToken) {
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -66,6 +67,7 @@ public class SocialLoginService {
             throw new RuntimeException("카카오 로그인 처리 중 오류 발생: " + e.getMessage(), e);
         }
     }
+    */
 
     // 구글 로그인
     public Map<String, Object> getGoogleMember(String accessToken) {

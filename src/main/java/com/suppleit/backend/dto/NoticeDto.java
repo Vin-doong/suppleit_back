@@ -14,6 +14,26 @@ public class NoticeDto {
     private String content;
     private Long memberId;  // ✅ 작성자 ID 추가
 
+    private String imagePath;
+    private String attachmentPath;
+    private String attachmentName;
+
+    // 이미지 URL 생성 메서드 0319
+    public String getImageUrl() {
+        if (imagePath != null && !imagePath.isEmpty()) {
+            return "/api/notice/image/" + imagePath;
+        }
+        return null;
+    }
+
+    // 첨부파일 URL 생성 메서드 0319
+    public String getAttachmentUrl() {
+        if (attachmentPath != null && !attachmentPath.isEmpty()) {
+            return "/api/notice/attachment/" + noticeId + "/" + attachmentName;
+        }
+        return null;
+    }
+
     // ✅ Notice 엔티티 → NoticeDto 변환 메서드
     public static NoticeDto fromEntity(Notice notice) {
         return NoticeDto.builder()

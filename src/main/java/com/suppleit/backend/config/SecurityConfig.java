@@ -93,6 +93,10 @@ public class SecurityConfig {
             .requestMatchers("/api/auth/refresh").permitAll()
             .requestMatchers("/api/auth/login").permitAll()
 
+            //공지사항
+            .requestMatchers("/api/notice/image/**").permitAll()  // 이미지 접근 허용
+            .requestMatchers("/api/notice/attachment/**").permitAll()  // 첨부파일 접근 허용
+
             .requestMatchers(HttpMethod.GET, "/api/notice/**").permitAll()  // 모든 사용자 공지사항 조회 가능
             .requestMatchers(HttpMethod.POST, "/api/notice").hasAuthority("ROLE_ADMIN")  // 공지사항 작성은 관리자만
             .requestMatchers(HttpMethod.PUT, "/api/notice/**").hasAuthority("ROLE_ADMIN")  // 공지사항 수정은 관리자만
