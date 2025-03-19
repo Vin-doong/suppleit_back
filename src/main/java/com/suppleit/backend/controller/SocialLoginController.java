@@ -45,8 +45,11 @@ public class SocialLoginController {
     @PostMapping("/login/google")
     public ResponseEntity<?> loginWithGoogle(@RequestBody Map<String, String> request) {
         String code = request.get("code");
+        log.info("구글 로그인 요청 - 인증 코드: {}", code.substring(0, Math.min(10, code.length())) + "...");
+        
         try {
             Map<String, Object> result = socialLoginService.getGoogleMember(code);
+            log.info("구글 로그인 성공 - 이메일: {}", result.get("email"));
             return ResponseEntity.ok(ApiResponse.success("구글 로그인 성공", result));
         } catch (Exception e) {
             log.error("구글 로그인 오류: {}", e.getMessage(), e);
@@ -63,7 +66,13 @@ public class SocialLoginController {
     @PostMapping("/login/naver")
     public ResponseEntity<?> loginWithNaver(@RequestBody Map<String, String> request) {
         String code = request.get("code");
+        // state는 선택적으로 처리
+        String state = request.getOrDefault("state", "");
+        
+        log.info("네이버 로그인 요청 - 인증 코드: {}", code);
+        
         try {
+            // state 파라미터 없이 코드만으로 사용자 정보 조회
             Map<String, Object> result = socialLoginService.getNaverMember(code);
             return ResponseEntity.ok(ApiResponse.success("네이버 로그인 성공", result));
         } catch (Exception e) {

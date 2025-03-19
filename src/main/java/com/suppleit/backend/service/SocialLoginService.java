@@ -10,9 +10,13 @@ import com.suppleit.backend.model.Member;
 import com.suppleit.backend.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -29,6 +33,18 @@ public class SocialLoginService {
     private final ObjectMapper objectMapper;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String googleClientId;
+    
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String googleClientSecret;
+    
+    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
+    private String naverClientId;
+    
+    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
+    private String naverClientSecret;
 
     // 카카오 로그인 - 사용하지 않음
     /*
@@ -70,7 +86,50 @@ public class SocialLoginService {
     */
 
     // 구글 로그인
-    public Map<String, Object> getGoogleMember(String accessToken) {
+    public Map<String, Object> getGoogleMember(String code) {
+        try {
+            log.info("구글 인증 코드 처리 시작: {}", code);
+            
+            // 1. 인증 코드로 액세스 토큰 요청
+            HttpHeaders tokenHeaders = new HttpHeaders();
+            tokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            
+            MultiValueMap<String, String> tokenRequest = new LinkedMultiValueMap<>();
+            tokenRequest.add("code", code);
+            tokenRequest.add("client_id", googleClientId);
+            tokenRequest.add("client_secret", googleClientSecret);
+            tokenRequest.add("redirect_uri", "http://localhost:3000/callback/google");
+            tokenRequest.add("grant_type", "authorization_code");
+            
+            HttpEntity<MultiValueMap<String, String>> tokenEntity = new HttpEntity<>(tokenRequest, tokenHeaders);
+            
+            log.info("구글 토큰 요청: {}", tokenRequest);
+            
+            ResponseEntity<String> tokenResponse = restTemplate.exchange(
+                    "https://oauth2.googleapis.com/token",
+                    HttpMethod.POST,
+                    tokenEntity,
+                    String.class
+            );
+            
+            log.info("구글 토큰 응답: {}", tokenResponse.getBody());
+            
+            // 2. 응답에서 액세스 토큰 추출
+            JsonNode tokenJson = objectMapper.readTree(tokenResponse.getBody());
+            String accessToken = tokenJson.get("access_token").asText();
+            
+            log.info("구글 액세스 토큰 획득: {}", accessToken);
+            
+            // 3. 이후 기존 로직을 사용하여 사용자 정보 요청
+            return getGoogleUserInfo(accessToken);
+        } catch (Exception e) {
+            log.error("구글 로그인 처리 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("구글 로그인 처리 중 오류 발생: " + e.getMessage(), e);
+        }
+    }
+    
+    // 기존 getGoogleMember 메서드를 getGoogleUserInfo로 이름 변경하고 내부 로직 유지
+    private Map<String, Object> getGoogleUserInfo(String accessToken) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + accessToken);
@@ -89,20 +148,60 @@ public class SocialLoginService {
             String email = jsonNode.has("email") ? jsonNode.get("email").asText() : null;
             String nickname = jsonNode.has("name") ? jsonNode.get("name").asText() : "구글 사용자";
 
-            // 이메일이 없으면 처리 불가
             if (email == null || email.isEmpty()) {
                 throw new IllegalArgumentException("구글 계정에서 이메일을 제공하지 않았습니다. 이메일 제공에 동의해주세요.");
             }
 
             return processSocialLogin(email, nickname, SocialType.GOOGLE);
         } catch (Exception e) {
-            log.error("구글 로그인 처리 중 오류: {}", e.getMessage());
-            throw new RuntimeException("구글 로그인 처리 중 오류 발생: " + e.getMessage(), e);
+            log.error("구글 사용자 정보 조회 중 오류: {}", e.getMessage());
+            throw new RuntimeException("구글 사용자 정보 조회 중 오류 발생: " + e.getMessage(), e);
         }
     }
 
-    // 네이버 로그인
-    public Map<String, Object> getNaverMember(String accessToken) {
+    public Map<String, Object> getNaverMember(String code) {
+        try {
+            log.info("네이버 인증 코드 처리 시작 - 코드: {}, 상태: {}", code);
+            
+            // 1. 인증 코드로 액세스 토큰 요청
+            HttpHeaders tokenHeaders = new HttpHeaders();
+            tokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            
+            MultiValueMap<String, String> tokenRequest = new LinkedMultiValueMap<>();
+            tokenRequest.add("grant_type", "authorization_code");
+            tokenRequest.add("client_id", naverClientId);
+            tokenRequest.add("client_secret", naverClientSecret);
+            tokenRequest.add("code", code);
+            
+            HttpEntity<MultiValueMap<String, String>> tokenEntity = new HttpEntity<>(tokenRequest, tokenHeaders);
+            
+            log.info("네이버 토큰 요청: {}", tokenRequest);
+            
+            ResponseEntity<String> tokenResponse = restTemplate.exchange(
+                    "https://nid.naver.com/oauth2.0/token",
+                    HttpMethod.POST,
+                    tokenEntity,
+                    String.class
+            );
+            
+            log.info("네이버 토큰 응답: {}", tokenResponse.getBody());
+            
+            // 2. 응답에서 액세스 토큰 추출
+            JsonNode tokenJson = objectMapper.readTree(tokenResponse.getBody());
+            String accessToken = tokenJson.get("access_token").asText();
+            
+            log.info("네이버 액세스 토큰 획득: {}", accessToken);
+            
+            // 3. 이후 기존 로직을 사용하여 사용자 정보 요청
+            return getNaverUserInfo(accessToken);
+        } catch (Exception e) {
+            log.error("네이버 로그인 처리 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("네이버 로그인 처리 중 오류 발생: " + e.getMessage(), e);
+        }
+    }
+    
+    // 기존 getNaverMember 메서드를 getNaverUserInfo로 이름 변경하고 내부 로직 유지
+    private Map<String, Object> getNaverUserInfo(String accessToken) {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + accessToken);
@@ -125,15 +224,14 @@ public class SocialLoginService {
             String nickname = responseData.has("nickname") ? responseData.get("nickname").asText() : 
                     responseData.has("name") ? responseData.get("name").asText() : "네이버 사용자";
 
-            // 이메일이 없으면 처리 불가
             if (email == null || email.isEmpty()) {
                 throw new IllegalArgumentException("네이버 계정에서 이메일을 제공하지 않았습니다. 이메일 제공에 동의해주세요.");
             }
 
             return processSocialLogin(email, nickname, SocialType.NAVER);
         } catch (Exception e) {
-            log.error("네이버 로그인 처리 중 오류: {}", e.getMessage());
-            throw new RuntimeException("네이버 로그인 처리 중 오류 발생: " + e.getMessage(), e);
+            log.error("네이버 사용자 정보 조회 중 오류: {}", e.getMessage());
+            throw new RuntimeException("네이버 사용자 정보 조회 중 오류 발생: " + e.getMessage(), e);
         }
     }
 
