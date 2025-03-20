@@ -1,5 +1,7 @@
 package com.suppleit.backend.model;
 
+import java.time.LocalDateTime;
+
 import lombok.*;
 
 @Getter
@@ -17,4 +19,10 @@ public class Notice {
     private String imagePath;        // 이미지 경로
     private String attachmentPath;   // 첨부파일 경로
     private String attachmentName;   // 첨부파일 원본명
+
+    //0320
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private int views;
+    private Long lastModifiedBy;
 }

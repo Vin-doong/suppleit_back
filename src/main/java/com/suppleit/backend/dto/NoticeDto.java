@@ -1,5 +1,8 @@
 package com.suppleit.backend.dto;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.suppleit.backend.model.Notice;
 import lombok.*;
 
@@ -17,6 +20,15 @@ public class NoticeDto {
     private String imagePath;
     private String attachmentPath;
     private String attachmentName;
+
+    //조회수, 작성일, 수정일  //0320
+    private int views;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedAt;
 
     // 이미지 URL 생성 메서드 0319
     public String getImageUrl() {

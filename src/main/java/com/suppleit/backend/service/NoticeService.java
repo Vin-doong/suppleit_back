@@ -126,4 +126,5 @@ public class NoticeService {
     public Long getMemberIdByEmail(String email) {
         return memberMapper.getMemberByEmail(email).getMemberId();
     }
+    
 }

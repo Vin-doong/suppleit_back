@@ -4,35 +4,55 @@
 
 <mapper namespace="com.suppleit.backend.mapper.NoticeMapper">
 
-    <!-- ✅ 공지사항 전체 조회 --> <!-- 0319수정 -->
+    <!-- 공지사항 전체 조회 - 조회수와 작성일 추가 -->
     <select id="getAllNotices" resultType="com.suppleit.backend.dto.NoticeDto">
         SELECT 
-            notice_id AS noticeId, 
-            title, 
-            content, 
-            member_id AS memberId,
-            image_path AS imagePath,
-            attachment_path AS attachmentPath,
-            attachment_name AS attachmentName
-        FROM Notice
-        ORDER BY notice_id DESC;
+            n.notice_id AS noticeId, 
+            n.title, 
+            n.content, 
+            n.views,
+            n.created_at AS createdAt,
+            n.updated_at AS updatedAt,
+            n.member_id AS memberId,
+            m.nickname AS authorName,
+            n.image_path AS imagePath,
+            n.attachment_path AS attachmentPath,
+            n.attachment_name AS attachmentName
+        FROM Notice n
+        LEFT JOIN Member m ON n.member_id = m.member_id
+        ORDER BY n.notice_id DESC
     </select>
 
-    <!-- ✅ 특정 공지사항 조회 --> <!-- 0319수정 -->
+    <!-- 특정 공지사항 조회 - 조회수 증가 및 작성자 정보 추가 -->
     <select id="getNoticeById" resultType="com.suppleit.backend.dto.NoticeDto">
         SELECT 
-            notice_id AS noticeId, 
-            title, 
-            content, 
-            member_id AS memberId,
-            image_path AS imagePath,
-            attachment_path AS attachmentPath,
-            attachment_name AS attachmentName
-        FROM Notice 
-        WHERE notice_id = #{noticeId};
+            n.notice_id AS noticeId, 
+            n.title, 
+            n.content, 
+            n.views,
+            n.created_at AS createdAt,
+            n.updated_at AS updatedAt,
+            n.member_id AS memberId,
+            m.nickname AS authorName,
+            n.last_modified_by AS lastModifiedBy,
+            m2.nickname AS modifierName,
+            n.image_path AS imagePath,
+            n.attachment_path AS attachmentPath,
+            n.attachment_name AS attachmentName
+        FROM Notice n
+        LEFT JOIN Member m ON n.member_id = m.member_id
+        LEFT JOIN Member m2 ON n.last_modified_by = m2.member_id
+        WHERE n.notice_id = #{noticeId}
     </select>
 
-    <!-- ✅ 공지사항 등록 --> <!-- 0319수정 -->
+    <!-- 조회수 증가 -->
+    <update id="incrementViews">
+        UPDATE Notice 
+        SET views = views + 1 
+        WHERE notice_id = #{noticeId}
+    </update>
+
+    <!-- 공지사항 등록 -->
     <insert id="insertNotice" useGeneratedKeys="true" keyProperty="noticeId">
         INSERT INTO Notice (
             title, 
@@ -40,24 +60,29 @@
             member_id, 
             image_path, 
             attachment_path, 
-            attachment_name
+            attachment_name,
+            views,
+            created_at
         ) VALUES (
             #{title}, 
             #{content}, 
             #{memberId}, 
             #{imagePath}, 
             #{attachmentPath}, 
-            #{attachmentName}
-        );
+            #{attachmentName},
+            0,
+            NOW()
+        )
     </insert>
 
-
-    <!-- ✅ 공지사항 수정 --> <!-- 0319수정 -->
+    <!-- 공지사항 수정 -->
     <update id="updateNotice">
         UPDATE Notice 
         SET 
             title = #{notice.title}, 
-            content = #{notice.content}
+            content = #{notice.content},
+            last_modified_by = #{notice.lastModifiedBy},
+            updated_at = NOW()
             <if test="notice.imagePath != null">
             , image_path = #{notice.imagePath}
             </if>
@@ -65,12 +90,12 @@
             , attachment_path = #{notice.attachmentPath}
             , attachment_name = #{notice.attachmentName}
             </if>
-        WHERE notice_id = #{noticeId};
+        WHERE notice_id = #{noticeId}
     </update>
 
-    <!-- ✅ 공지사항 삭제 -->
+    <!-- 공지사항 삭제 -->
     <delete id="deleteNotice">
-        DELETE FROM Notice WHERE notice_id = #{noticeId};
+        DELETE FROM Notice WHERE notice_id = #{noticeId}
     </delete>
 
 </mapper>
