@@ -26,8 +26,11 @@ public class NoticeService {
     }
 
     // ✅ 특정 공지사항 조회 (Entity → DTO 변환)
+    @Transactional
     public NoticeDto getNoticeById(Long noticeId) {
-        return noticeMapper.getNoticeById(noticeId); // 변환 과정 제거
+        // 조회수 증가 로직 추가
+        noticeMapper.incrementViews(noticeId);
+        return noticeMapper.getNoticeById(noticeId);
     }
 
     // ✅ 공지사항 생성 (관리자만 가능)
