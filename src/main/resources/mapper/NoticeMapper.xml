@@ -4,12 +4,16 @@
 
 <mapper namespace="com.suppleit.backend.mapper.NoticeMapper">
 
-    <!-- 공지사항 전체 조회 - 조회수와 작성일 추가 -->
+    <!-- Notice 테이블의 content 컬럼 타입을 LONGTEXT로 변경하는 쿼리
+         실행하기 전에 데이터베이스에서 직접 실행해야 함
+    ALTER TABLE Notice MODIFY content LONGTEXT; -->
+
+    <!-- 공지사항 전체 조회 - 조회수와 작성일 추가 + 작성자 JOIN -->
     <select id="getAllNotices" resultType="com.suppleit.backend.dto.NoticeDto">
         SELECT 
             n.notice_id AS noticeId, 
             n.title, 
-            n.content, 
+            LEFT(n.content, 500) AS content, <!-- 목록에서는 내용 일부만 가져오기 -->
             n.views,
             n.created_at AS createdAt,
             n.updated_at AS updatedAt,
@@ -23,7 +27,7 @@
         ORDER BY n.notice_id DESC
     </select>
 
-    <!-- 특정 공지사항 조회 - 조회수 증가 및 작성자 정보 추가 -->
+    <!-- 특정 공지사항 조회 - 조회수 증가 및 작성자/수정자 정보 추가 -->
     <select id="getNoticeById" resultType="com.suppleit.backend.dto.NoticeDto">
         SELECT 
             n.notice_id AS noticeId, 
@@ -75,7 +79,7 @@
         )
     </insert>
 
-    <!-- 공지사항 수정 -->
+    <!-- 공지사항 수정 - content 컬럼 길이 제한 관련 수정 -->
     <update id="updateNotice">
         UPDATE Notice 
         SET 
@@ -86,9 +90,16 @@
             <if test="notice.imagePath != null">
             , image_path = #{notice.imagePath}
             </if>
+            <if test="notice.imagePath == null">
+            , image_path = NULL
+            </if>
             <if test="notice.attachmentPath != null">
             , attachment_path = #{notice.attachmentPath}
             , attachment_name = #{notice.attachmentName}
+            </if>
+            <if test="notice.attachmentPath == null">
+            , attachment_path = NULL
+            , attachment_name = NULL
             </if>
         WHERE notice_id = #{noticeId}
     </update>

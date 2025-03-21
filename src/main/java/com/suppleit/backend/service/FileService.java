@@ -1,4 +1,3 @@
-//0319
 package com.suppleit.backend.service;
 
 import jakarta.annotation.PostConstruct;
@@ -24,7 +23,6 @@ public class FileService {
     private String attachmentUploadDir;
 
     // 애플리케이션 시작 시 업로드 디렉토리 생성
-    // FileService.java에서 init() 메서드를 로깅을 추가하여 수정
     @PostConstruct
     public void init() {
         try {
@@ -109,5 +107,16 @@ public class FileService {
             Path filePath = Paths.get(attachmentUploadDir + relativePath);
             Files.deleteIfExists(filePath);
         }
+    }
+    
+    // 파일 확장자 확인
+    public boolean isImageByExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return false;
+        }
+        String lowerFileName = fileName.toLowerCase();
+        return lowerFileName.endsWith(".jpg") || lowerFileName.endsWith(".jpeg") || 
+               lowerFileName.endsWith(".png") || lowerFileName.endsWith(".gif") || 
+               lowerFileName.endsWith(".bmp") || lowerFileName.endsWith(".svg");
     }
 }
