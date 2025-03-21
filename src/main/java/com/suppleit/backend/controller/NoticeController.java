@@ -143,15 +143,19 @@ public class NoticeController extends JwtSupportController {
         }
     }
 
-    // 공지사항 등록 (이미지 및 첨부파일 포함) - 수정: 다중 파일 업로드 지원
+    // 공지사항 등록 (이미지 및 첨부파일 포함) - 수정: 본문 내 이미지 처리 추가
     @PostMapping
     public ResponseEntity<?> createNotice(
             @RequestPart("notice") NoticeDto notice, 
             @RequestPart(value = "image", required = false) MultipartFile image,
             @RequestPart(value = "attachment", required = false) MultipartFile attachment,
+            @RequestPart(value = "contentImages", required = false) List<MultipartFile> contentImages,
             HttpServletRequest request) {
         try {
-            log.info("공지사항 등록 요청: {}", notice.getTitle());
+            log.info("공지사항 등록 요청: {}, 본문 이미지: {}개", 
+                notice.getTitle(), 
+                contentImages != null ? contentImages.size() : 0);
+            
             // 컨텐츠 길이 제한 확인 및 처리
             if (notice.getContent() != null && notice.getContent().length() > 16000) {
                 log.warn("컨텐츠 길이 초과 ({}자), 16000자로 제한합니다.", notice.getContent().length());
@@ -166,7 +170,7 @@ public class NoticeController extends JwtSupportController {
             
             // 공지사항 등록 (memberId 추가)
             notice.setMemberId(memberId);
-            noticeService.createNotice(notice, image, attachment);
+            noticeService.createNotice(notice, image, attachment, contentImages);
             
             return ResponseEntity.ok(Map.of(
                 "success", true,
@@ -182,16 +186,19 @@ public class NoticeController extends JwtSupportController {
         }
     }
 
-    // 공지사항 수정 (이미지 및 첨부파일 포함) - 수정: 다중 파일 업로드 지원
+    // 공지사항 수정 (이미지 및 첨부파일 포함) - 수정: 본문 내 이미지 처리 추가
     @PutMapping("/{noticeId}")
     public ResponseEntity<?> updateNotice(
             @PathVariable Long noticeId, 
             @RequestPart("notice") NoticeDto notice,
             @RequestPart(value = "image", required = false) MultipartFile image,
             @RequestPart(value = "attachment", required = false) MultipartFile attachment,
+            @RequestPart(value = "contentImages", required = false) List<MultipartFile> contentImages,
             HttpServletRequest request) {
         try {
-            log.info("공지사항 수정 요청: {}", noticeId);
+            log.info("공지사항 수정 요청: {}, 본문 이미지: {}개", 
+                noticeId, 
+                contentImages != null ? contentImages.size() : 0);
             
             // 컨텐츠 길이 제한 확인 및 처리
             if (notice.getContent() != null && notice.getContent().length() > 16000) {
@@ -209,7 +216,7 @@ public class NoticeController extends JwtSupportController {
             notice.setMemberId(memberId);
             notice.setLastModifiedBy(memberId);
             
-            noticeService.updateNotice(noticeId, notice, image, attachment);
+            noticeService.updateNotice(noticeId, notice, image, attachment, contentImages);
             
             return ResponseEntity.ok(Map.of(
                 "success", true,

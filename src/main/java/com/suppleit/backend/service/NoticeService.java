@@ -39,15 +39,45 @@ public class NoticeService {
         return noticeMapper.getNoticeById(noticeId);
     }
 
+    // 본문 내 Base64 이미지 처리 메서드
+    private String processBase64Images(String content, List<MultipartFile> contentImages) throws IOException {
+        if (content == null || contentImages == null || contentImages.isEmpty()) {
+            return content;
+        }
+        
+        // 각 이미지마다 처리
+        for (int i = 0; i < contentImages.size(); i++) {
+            MultipartFile image = contentImages.get(i);
+            String imagePath = fileService.saveImage(image);
+            
+            // {{IMAGE_PLACEHOLDER_x}}를 실제 이미지 URL로 교체
+            String placeholder = "{{IMAGE_PLACEHOLDER_" + i + "}}";
+            String imageUrl = "http://localhost:8000/api/notice/image/" + imagePath;
+            content = content.replace(placeholder, imageUrl);
+            
+            log.info("본문 내 이미지 저장 완료: {}, URL: {}", imagePath, imageUrl);
+        }
+        
+        return content;
+    }
+
     // 공지사항 생성 (여러 파일 처리)
     @Transactional
-    public void createNotice(NoticeDto noticeDto, MultipartFile image, MultipartFile attachment) throws IOException {
-        log.info("공지사항 생성 시작 - 이미지: {}, 첨부파일: {}", 
+    public void createNotice(NoticeDto noticeDto, MultipartFile image, MultipartFile attachment, 
+                          List<MultipartFile> contentImages) throws IOException {
+        log.info("공지사항 생성 시작 - 이미지: {}, 첨부파일: {}, 본문 이미지: {}개", 
             image != null ? image.getOriginalFilename() : "없음", 
-            attachment != null ? attachment.getOriginalFilename() : "없음");
+            attachment != null ? attachment.getOriginalFilename() : "없음",
+            contentImages != null ? contentImages.size() : 0);
             
         // 컨텐츠 길이 제한
         limitContentLength(noticeDto);
+        
+        // 본문 내 Base64 이미지 처리
+        if (contentImages != null && !contentImages.isEmpty()) {
+            String processedContent = processBase64Images(noticeDto.getContent(), contentImages);
+            noticeDto.setContent(processedContent);
+        }
 
         // 이미지와 첨부파일 모두 처리
         processImageAndAttachment(noticeDto, image, attachment);
@@ -62,13 +92,13 @@ public class NoticeService {
 
     // 공지사항 수정 (여러 파일 처리 및 기존 파일 관리)
     @Transactional
-    public void updateNotice(Long noticeId, NoticeDto noticeDto, MultipartFile image, MultipartFile attachment) throws IOException {
-        log.info("공지사항 수정 시작 - ID: {}, 이미지: {}, 첨부파일: {}, 이미지 제거: {}, 첨부파일 제거: {}", 
+    public void updateNotice(Long noticeId, NoticeDto noticeDto, MultipartFile image, MultipartFile attachment,
+                          List<MultipartFile> contentImages) throws IOException {
+        log.info("공지사항 수정 시작 - ID: {}, 이미지: {}, 첨부파일: {}, 본문 이미지: {}개", 
             noticeId,
             image != null ? image.getOriginalFilename() : "없음", 
             attachment != null ? attachment.getOriginalFilename() : "없음",
-            noticeDto.isRemoveImage(),
-            noticeDto.isRemoveAttachment());
+            contentImages != null ? contentImages.size() : 0);
             
         // 기존 공지사항 조회
         NoticeDto existingNotice = noticeMapper.getNoticeById(noticeId);
@@ -79,6 +109,12 @@ public class NoticeService {
 
         // 컨텐츠 길이 제한
         limitContentLength(noticeDto);
+        
+        // 본문 내 Base64 이미지 처리
+        if (contentImages != null && !contentImages.isEmpty()) {
+            String processedContent = processBase64Images(noticeDto.getContent(), contentImages);
+            noticeDto.setContent(processedContent);
+        }
         
         // 이미지와 첨부파일 처리
         handleImageUpdate(noticeDto, existingNotice, image);
