@@ -24,13 +24,20 @@ public class FileService {
     private String attachmentUploadDir;
 
     // 애플리케이션 시작 시 업로드 디렉토리 생성
+    // FileService.java에서 init() 메서드를 로깅을 추가하여 수정
     @PostConstruct
     public void init() {
         try {
-            Files.createDirectories(Paths.get(imageUploadDir));
-            Files.createDirectories(Paths.get(attachmentUploadDir));
+            Path imagePath = Paths.get(imageUploadDir);
+            Path attachmentPath = Paths.get(attachmentUploadDir);
+            
+            System.out.println("이미지 업로드 경로: " + imagePath.toAbsolutePath());
+            System.out.println("첨부파일 업로드 경로: " + attachmentPath.toAbsolutePath());
+            
+            Files.createDirectories(imagePath);
+            Files.createDirectories(attachmentPath);
         } catch (IOException e) {
-            throw new RuntimeException("업로드 디렉토리를 생성할 수 없습니다", e);
+            throw new RuntimeException("업로드 디렉토리를 생성할 수 없습니다: " + e.getMessage(), e);
         }
     }
 

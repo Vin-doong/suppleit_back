@@ -83,17 +83,46 @@ public class MemberController extends JwtSupportController {
     public ResponseEntity<Map<String, Object>> deleteMember(HttpServletRequest req) {
         try {
             String email = extractEmailFromToken(req);
+            
+            // 계정 유형 확인 (소셜 계정 여부)
+            boolean isSocialAccount = memberService.isSocialAccount(email);
+            String socialType = isSocialAccount ? memberService.getSocialType(email) : "NONE";
+            
+            // 회원 탈퇴 처리
             memberService.deleteMemberByEmail(email);
+            
+            // 계정 유형에 따른 응답 메시지 설정
+            String message = isSocialAccount ? 
+                    socialType + " 소셜 계정 연동이 해제되고 회원 탈퇴가 완료되었습니다." : 
+                    "회원 탈퇴가 완료되었습니다.";
             
             return ResponseEntity.ok(Map.of(
                 "success", true,
-                "message", "회원 탈퇴가 완료되었습니다."
+                "message", message
             ));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of(
                 "success", false,
                 "message", e.getMessage()
             ));
+        }
+    }
+    
+    // 계정 유형 조회 API (소셜 계정 여부 확인)
+    @GetMapping("/account-type")
+    public ResponseEntity<?> getAccountType(HttpServletRequest request) {
+        try {
+            String email = extractEmailFromToken(request);
+            boolean isSocialAccount = memberService.isSocialAccount(email);
+            String socialType = memberService.getSocialType(email);
+            
+            return ResponseEntity.ok(Map.of(
+                "isSocialAccount", isSocialAccount,
+                "socialType", socialType
+            ));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", e.getMessage()));
         }
     }
 }

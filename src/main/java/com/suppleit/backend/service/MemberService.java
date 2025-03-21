@@ -6,12 +6,14 @@ import com.suppleit.backend.dto.MemberDto;
 import com.suppleit.backend.mapper.MemberMapper;
 import com.suppleit.backend.model.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -20,6 +22,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     // 회원가입
+    @Transactional
     public void insertMember(MemberDto memberDto) {
         if (!checkEmail(memberDto.getEmail())) {
             throw new IllegalArgumentException("이미 등록된 이메일입니다.");
@@ -51,7 +54,7 @@ public class MemberService {
         // 실제 DB에 저장하는 호출
         memberMapper.insertMember(member);
         
-        System.out.println("회원 저장 완료: " + member.getEmail());
+        log.info("회원 저장 완료: {}", member.getEmail());
     }
     
     // 비밀번호 검증
@@ -96,17 +99,21 @@ public class MemberService {
     // 이메일로 회원 조회
     public Optional<MemberDto> getMemberByEmail(String email) {
         return Optional.ofNullable(memberMapper.getMemberByEmail(email))
-                .map(MemberDto::fromEntity);  // 수정된 fromEntity 메서드 사용
+                .map(MemberDto::fromEntity);  // Member 엔티티를 MemberDto로 변환
     }
     
     
-    // 회원 정보 수정
+    // 회원 정보 수정 (소셜 계정 분리 처리)
+    @Transactional
     public void updateMemberInfo(String email, MemberDto memberDto) {
         Member existingMember = memberMapper.getMemberByEmail(email);
         
         if (existingMember == null) {
             throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
         }
+        
+        // 소셜 계정 여부 확인
+        boolean isSocialAccount = existingMember.getSocialType() != SocialType.NONE;
         
         // 닉네임 변경 시 중복 검사
         if (memberDto.getNickname() != null && !existingMember.getNickname().equals(memberDto.getNickname()) 
@@ -119,18 +126,45 @@ public class MemberService {
         if (memberDto.getGender() != null) existingMember.setGender(memberDto.getGender());
         if (memberDto.getBirth() != null) existingMember.setBirth(memberDto.getBirth());
         
+        // 비밀번호 변경 (소셜 계정이 아닌 경우에만)
+        if (!isSocialAccount && memberDto.getPassword() != null && !memberDto.getPassword().isEmpty()) {
+            // 비밀번호 유효성 검사
+            validatePassword(memberDto.getPassword());
+            // 비밀번호 암호화
+            String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
+            existingMember.setPassword(encodedPassword);
+        } else if (isSocialAccount && memberDto.getPassword() != null && !memberDto.getPassword().isEmpty()) {
+            // 소셜 계정인데 비밀번호 변경을 시도하는 경우
+            throw new IllegalArgumentException("소셜 로그인 계정은 비밀번호를 변경할 수 없습니다.");
+        }
+        
         memberMapper.updateMemberInfo(existingMember);
+        log.info("회원 정보 수정 완료: {}", existingMember.getEmail());
     }
 
-    // 회원 탈퇴
+    // 회원 탈퇴 (소셜 계정 처리 추가)
+    @Transactional
     public void deleteMemberByEmail(String email) {
         Member member = memberMapper.getMemberByEmail(email);
     
         if (member == null) {
             throw new IllegalArgumentException("해당 이메일로 가입된 사용자가 없습니다.");
         }
+        
+        // 소셜 계정 여부 확인
+        boolean isSocialAccount = member.getSocialType() != SocialType.NONE;
+        
+        if (isSocialAccount) {
+            // 소셜 계정인 경우 로그 남기기
+            log.info("소셜 계정({}) 회원 탈퇴 처리: {}", member.getSocialType(), member.getEmail());
+            
+            // 소셜 연동 해제 로직이 필요한 경우 여기에 추가
+            // 예: 각 소셜 플랫폼 API를 호출하여 연동 해제 요청
+        }
 
+        // DB에서 회원 정보 삭제
         memberMapper.deleteMemberByEmail(email);
+        log.info("회원 탈퇴 완료: {}", email);
     }
     
     // 이메일로 회원 역할 조회
@@ -140,5 +174,23 @@ public class MemberService {
             throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
         }
         return member.getMemberRole().name();
+    }
+    
+    // 소셜 계정 여부 확인
+    public boolean isSocialAccount(String email) {
+        Member member = memberMapper.getMemberByEmail(email);
+        if (member == null) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+        return member.getSocialType() != SocialType.NONE;
+    }
+    
+    // 소셜 계정 타입 조회
+    public String getSocialType(String email) {
+        Member member = memberMapper.getMemberByEmail(email);
+        if (member == null) {
+            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+        }
+        return member.getSocialType().name();
     }
 }

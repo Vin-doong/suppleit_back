@@ -16,10 +16,13 @@ public class NoticeDto {
     private String title;
     private String content;
     private Long memberId;  // ✅ 작성자 ID 추가
+    private Long lastModifiedBy; // 마지막 수정자 ID
 
     private String imagePath;
     private String attachmentPath;
     private String attachmentName;
+    private boolean removeAttachment; // 첨부파일 제거 플래그 추가
+    private boolean removeImage;
 
     //조회수, 작성일, 수정일  //0320
     private int views;
@@ -53,6 +56,15 @@ public class NoticeDto {
                 .title(notice.getTitle())
                 .content(notice.getContent())
                 .memberId(notice.getMemberId())
+                .lastModifiedBy(notice.getLastModifiedBy())
+                .imagePath(notice.getImagePath())
+                .attachmentPath(notice.getAttachmentPath())
+                .attachmentName(notice.getAttachmentName())
+                .views(notice.getViews())
+                .createdAt(notice.getCreatedAt())
+                .updatedAt(notice.getUpdatedAt())
+                .removeAttachment(false) // 기본값은 false
+                .removeImage(false)
                 .build();
     }
 
@@ -63,6 +75,13 @@ public class NoticeDto {
                 .title(this.title)
                 .content(this.content)
                 .memberId(this.memberId)
+                .lastModifiedBy(this.lastModifiedBy)
+                .imagePath(this.imagePath)
+                .attachmentPath(this.attachmentPath)
+                .attachmentName(this.attachmentName)
+                .views(this.views)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
                 .build();
     }
 }
